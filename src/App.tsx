@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 function App() {
   const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+  const membraneSynth = new Tone.MembraneSynth().toDestination();
   const [initApp, setInitApp] = useState<boolean>(false);
 
   const AppDiv = styled.div`
@@ -16,7 +17,7 @@ function App() {
     <>
       <AppDiv>
         {initApp ? (
-          <Canvas synth={synth} />
+          <Canvas synth={synth} membraneSynth={membraneSynth} />
         ) : (
           <button onClick={() => setInitApp(true)}> Click to start </button>
         )}

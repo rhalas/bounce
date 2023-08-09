@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 type CanvasProps = {
   synth: any;
+  membraneSynth: any;
 };
 
 const MainCanvas = styled.div`
