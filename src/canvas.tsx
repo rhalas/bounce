@@ -7,7 +7,11 @@ type CanvasProps = {
 };
 
 export const Canvas = (canvasProps: CanvasProps) => {
-  const labelToNote = {
+  interface labelToNoteType {
+    [key: string]: Array<string>;
+  }
+
+  const labelToNote: labelToNoteType = {
     boundary: ["A", "B", "C", "D"],
     ball: ["E", "F", "G"],
   };
@@ -24,9 +28,9 @@ export const Canvas = (canvasProps: CanvasProps) => {
     let engine = Engine.create({});
 
     let render = Render.create({
-      element: boxRef.current,
+      element: boxRef.current!,
       engine: engine,
-      canvas: canvasRef.current,
+      canvas: canvasRef.current!,
       options: {
         width: 300,
         height: 300,
@@ -40,7 +44,7 @@ export const Canvas = (canvasProps: CanvasProps) => {
     Matter.Events.on(engine, "collisionStart", (event) => {
       var pairs = event.pairs;
       playNote(canvasProps.synth, [
-        labelToNote[pairs[0].bodyA.label],
+        labelToNote[pairs[0].bodyA.label as string],
         labelToNote[pairs[0].bodyB.label],
       ]);
     });
