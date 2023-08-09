@@ -19,8 +19,10 @@ export const Canvas = (canvasProps: CanvasProps) => {
   }
 
   const labelToNote: labelToNoteType = {
-    boundary: ["A", "B", "C", "D"],
-    ball: ["E", "F", "G"],
+    boundary: ["B", "D", "F"],
+    ball: ["A", "B", "C"],
+    ball2: ["D", "E", "F"],
+    extraNote: ["A", "C", "E", "G"],
   };
 
   const boxRef = useRef(null);
@@ -51,8 +53,9 @@ export const Canvas = (canvasProps: CanvasProps) => {
     Matter.Events.on(engine, "collisionStart", (event) => {
       var pairs = event.pairs;
       playNote(canvasProps.synth, [
-        labelToNote[pairs[0].bodyA.label as string],
+        labelToNote[pairs[0].bodyA.label],
         labelToNote[pairs[0].bodyB.label],
+        labelToNote["extraNote"],
       ]);
     });
 
@@ -110,7 +113,7 @@ export const Canvas = (canvasProps: CanvasProps) => {
         render: {
           fillStyle: "#a720df",
         },
-        label: "ball",
+        label: "ball2",
       }
     );
 
