@@ -1,10 +1,16 @@
 import { useRef, useEffect } from "react";
 import Matter from "matter-js";
 import { playNote } from "./sound";
+import styled from "styled-components";
 
 type CanvasProps = {
   synth: any;
 };
+
+const MainCanvas = styled.div`
+  display: flex;
+  margin: auto;
+`;
 
 export const Canvas = (canvasProps: CanvasProps) => {
   interface labelToNoteType {
@@ -94,7 +100,7 @@ export const Canvas = (canvasProps: CanvasProps) => {
       }
     );
 
-    const ball3 = Bodies.circle(
+    const ball2 = Bodies.circle(
       Math.floor(Math.random() * 300),
       Math.floor(Math.random() * 300),
       10,
@@ -107,15 +113,15 @@ export const Canvas = (canvasProps: CanvasProps) => {
       }
     );
 
-    World.add(engine.world, [floor, leftWall, ceiling, rightWall, ball, ball3]);
+    World.add(engine.world, [floor, leftWall, ceiling, rightWall, ball, ball2]);
 
     Matter.Runner.run(engine!);
     Matter.Render.run(render!);
   }, []);
 
   return (
-    <div ref={boxRef} style={{ width: 300, height: 300 }}>
+    <MainCanvas ref={boxRef} style={{ width: 300, height: 300 }}>
       <canvas ref={canvasRef} />
-    </div>
+    </MainCanvas>
   );
 };
