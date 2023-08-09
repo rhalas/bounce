@@ -81,21 +81,31 @@ export const Canvas = (canvasProps: CanvasProps) => {
       label: "boundary",
     });
 
-    const ball = Bodies.circle(150, 10, 10, {
-      restitution: 1.5,
-      render: {
-        fillStyle: "#58df20",
-      },
-      label: "ball",
-    });
+    const ball = Bodies.circle(
+      Math.floor(Math.random() * 300),
+      Math.floor(Math.random() * 300),
+      10,
+      {
+        restitution: 1.5,
+        render: {
+          fillStyle: "#58df20",
+        },
+        label: "ball",
+      }
+    );
 
-    const ball3 = Bodies.circle(150, 25, 10, {
-      restitution: 1.5,
-      render: {
-        fillStyle: "#a720df",
-      },
-      label: "ball",
-    });
+    const ball3 = Bodies.circle(
+      Math.floor(Math.random() * 300),
+      Math.floor(Math.random() * 300),
+      10,
+      {
+        restitution: 1.5,
+        render: {
+          fillStyle: "#a720df",
+        },
+        label: "ball",
+      }
+    );
 
     World.add(engine.world, [floor, leftWall, ceiling, rightWall, ball, ball3]);
 
