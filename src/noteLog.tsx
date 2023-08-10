@@ -36,7 +36,6 @@ const NoteRow = (props: { noteLogEntry: NoteLogEntry }) => {
         {props.noteLogEntry.notes.map((note) => {
           return <Notes>{note}</Notes>;
         })}
-        {"  -->  "}
         {props.noteLogEntry.eventName}
       </NoteRowContainer>
     </>

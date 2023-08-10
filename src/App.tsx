@@ -10,7 +10,6 @@ const AppComponent = styled.div`
 
 function App() {
   const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  const membraneSynth = new Tone.MembraneSynth().toDestination();
   const [initApp, setInitApp] = useState<boolean>(false);
   const [stopUpdating, setStopUpdating] = useState<boolean>(false);
 
@@ -42,11 +41,7 @@ function App() {
       <AppComponent>
         {initApp ? (
           <>
-            <Canvas
-              synth={synth}
-              membraneSynth={membraneSynth}
-              playedNotesCallback={playedNotesCallback}
-            />
+            <Canvas synth={synth} playedNotesCallback={playedNotesCallback} />
             <NoteLog noteLog={noteLog} />
           </>
         ) : (

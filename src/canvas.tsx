@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 type CanvasProps = {
   synth: any;
-  membraneSynth: any;
   playedNotesCallback: (noteNames: Array<string>, eventName: string) => void;
 };
 
@@ -122,7 +121,7 @@ export const Canvas = (canvasProps: CanvasProps) => {
           labelToNote["extraNote"],
         ],
         canvasProps.playedNotesCallback,
-        `${pairs[0].bodyA.label} - ${pairs[0].bodyB.label}`
+        `: ${pairs[0].bodyA.label} hit ${pairs[0].bodyB.label}`
       );
     });
 
