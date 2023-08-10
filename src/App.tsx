@@ -8,20 +8,15 @@ function App() {
   const membraneSynth = new Tone.MembraneSynth().toDestination();
   const [initApp, setInitApp] = useState<boolean>(false);
 
-  const AppDiv = styled.div`
-    display: flex;
-    margin: auto;
-  `;
-
   return (
     <>
-      <AppDiv>
+      <div>
         {initApp ? (
           <Canvas synth={synth} membraneSynth={membraneSynth} />
         ) : (
           <button onClick={() => setInitApp(true)}> Click to start </button>
         )}
-      </AppDiv>
+      </div>
     </>
   );
 }
