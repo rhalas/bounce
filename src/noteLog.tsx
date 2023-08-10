@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useRef, useEffect } from "react";
 
 const NoteLogContainer = styled.div`
   width: 300px;
@@ -44,11 +45,22 @@ const NoteRow = (props: { noteLogEntry: NoteLogEntry }) => {
 
 export const NoteLog = (noteLogProps: NoteLogProps) => {
   const { noteLog } = noteLogProps;
+  const noteLogEndRef = useRef<null | HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    noteLogEndRef.current!.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [noteLogProps]);
+
   return (
     <NoteLogContainer>
       {noteLog.entries.map((notes) => {
         return <NoteRow noteLogEntry={notes} />;
       })}
+      <div ref={noteLogEndRef} />
     </NoteLogContainer>
   );
 };
