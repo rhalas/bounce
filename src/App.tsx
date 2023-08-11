@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Canvas } from "./canvas";
 import { NoteLog, NoteLogCollection } from "./noteLog";
 import styled from "styled-components";
-import { scaleNotes } from "./sound";
+import { scaleNotes, modeOptions } from "./sound";
 
 const AppComponent = styled.div`
   display: flex;
@@ -26,6 +26,10 @@ const AppRow = styled.div`
   margin: auto;
   border-style: groove;
   border-width: medium;
+`;
+
+const SettingsButtons = styled.button<{ $isSelected?: boolean }>`
+  ${(props) => props.$isSelected && "background-color: #28d78d;"}
 `;
 
 function App() {
@@ -88,9 +92,14 @@ function App() {
 
   const scaleOptions = Object.keys(scaleNotes);
   const [activeKey, setActiveKey] = useState<string>("C");
+  const [mode, setMode] = useState<string>("Major");
 
   const selectScaleOption = (scaleOption: string) => {
     setActiveKey(scaleOption);
+  };
+
+  const selectMode = (newMode: string) => {
+    setMode(newMode);
   };
 
   return (
@@ -98,16 +107,33 @@ function App() {
       <AppComponent>
         {initApp ? (
           <>
+            <BreakRow />
+            <SettingsRow>
+              {modeOptions.map((modeOption) => {
+                return (
+                  <SettingsButtons
+                    $isSelected={modeOption == mode}
+                    onClick={() => {
+                      selectMode(modeOption);
+                    }}
+                  >
+                    {modeOption}
+                  </SettingsButtons>
+                );
+              })}
+            </SettingsRow>
+            <BreakRow />
             <SettingsRow>
               {scaleOptions.map((scaleOption) => {
                 return (
-                  <button
+                  <SettingsButtons
+                    $isSelected={scaleOption == activeKey}
                     onClick={() => {
                       selectScaleOption(scaleOption);
                     }}
                   >
                     {scaleOption}
-                  </button>
+                  </SettingsButtons>
                 );
               })}
             </SettingsRow>
@@ -117,6 +143,7 @@ function App() {
                 synths={[sineSynth, triangleSynth]}
                 playedNotesCallback={playedNotesCallback}
                 activeKey={activeKey}
+                activeMode={mode}
               />
               <NoteLog noteLog={noteLog} />
             </AppRow>

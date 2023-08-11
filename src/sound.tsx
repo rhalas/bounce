@@ -4,6 +4,8 @@ interface scaleNotesTypes {
   [key: string]: Array<string>;
 }
 
+export const modeOptions = ["Major", "Minor"];
+
 export const scaleNotes: scaleNotesTypes = {
   C: ["C", "D", "E", "F", "G", "A", "B"],
   "C#": ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
@@ -17,6 +19,21 @@ export const scaleNotes: scaleNotesTypes = {
   A: ["A", "B", "C#", "D", "E", "F#", "G#"],
   "A#": ["Bb", "C", "D", "Eb", "F", "G", "A"],
   B: ["B", "C#", "D#", "E", "F#", "G#", "A#"],
+};
+
+export const minorScaleNotes: scaleNotesTypes = {
+  A: ["A", "B", "C", "D", "E", "F", "G"],
+  "A#": ["A#", "C", "C#", "D#", "F", "F#", "G#"],
+  B: ["B", "C#", "D", "E", "F#", "G", "A"],
+  C: ["C", "D", "Eb", "F", "G", "Ab", "Bb"],
+  "C#": ["C#", "D#", "E", "F#", "G#", "A", "B"],
+  D: ["D", "E", "F", "G", "A", "Bb", "C"],
+  "D#": ["D#", "F", "F#", "G#", "A#", "B", "C#"],
+  E: ["E", "F#", "G", "A", "B", "C", "D"],
+  F: ["F", "G", "Ab", "Bb", "C", "Db", "Eb"],
+  "F#": ["F#", "G#", "A", "B", "C#", "D", "E"],
+  G: ["G", "A", "Bb", "C", "D", "Eb", "F"],
+  "G#": ["G#", "A#", "B", "C#", "D#", "E", "F#"],
 };
 
 const sortByKey = (rootNote: string, notes: Array<string>) => {
@@ -47,14 +64,16 @@ export const playNote = (
   allNoteIndicies: Array<Array<number>>,
   playedNotesCallback: (noteNames: Array<string>, eventName: string) => void,
   eventName: string,
-  activeKey: string
+  activeKey: string,
+  activeMode: string
 ) => {
   const now = Tone.now();
 
   let notes = new Array();
   let notesWithOctave = new Array();
 
-  const selectedScale = scaleNotes[activeKey];
+  const selectedScale =
+    activeMode === "Major" ? scaleNotes[activeKey] : minorScaleNotes[activeKey];
 
   const noteNames: Array<Array<string>> = [];
   allNoteIndicies.forEach((noteIndicies) => {

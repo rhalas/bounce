@@ -7,6 +7,7 @@ type CanvasProps = {
   synths: Array<any>;
   playedNotesCallback: (noteNames: Array<string>, eventName: string) => void;
   activeKey: string;
+  activeMode: string;
 };
 
 type NoteEvent = {
@@ -122,7 +123,8 @@ export const Canvas = (canvasProps: CanvasProps) => {
         ],
         canvasProps.playedNotesCallback,
         newEvent!.name,
-        canvasProps.activeKey
+        canvasProps.activeKey,
+        canvasProps.activeMode
       );
 
       setLastEvent(newEvent);
