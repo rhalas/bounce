@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Canvas } from "./canvas";
 import { NoteLog, NoteLogCollection } from "./noteLog";
 import styled from "styled-components";
@@ -9,35 +9,49 @@ const AppComponent = styled.div`
 `;
 
 function App() {
-  const sineSynth = new Tone.PolySynth(Tone.Synth).toDestination();
-  sineSynth.set({
-    oscillator: {
-      type: "sine5",
-      volume: -6,
-    },
-    envelope: {
-      attack: 0.1,
-      decay: 0.4,
-      sustain: 0.3,
-      release: 0.7,
-    },
-  });
-
-  const triangleSynth = new Tone.PolySynth(Tone.Synth).toDestination();
-  triangleSynth.set({
-    oscillator: {
-      type: "triangle",
-      volume: -6,
-    },
-    envelope: {
-      attack: 0.1,
-      decay: 0.4,
-      sustain: 0.5,
-      release: 0.3,
-    },
-  });
-
   const [initApp, setInitApp] = useState<boolean>(false);
+  const [sineSynth, setSineSynth] = useState<Tone.PolySynth>();
+  const [triangleSynth, setTriangleSynth] = useState<Tone.PolySynth>();
+
+  useEffect(() => {
+    const s1 = new Tone.PolySynth(Tone.Synth).toDestination();
+    s1.set({
+      oscillator: {
+        type: "sine5",
+        volume: -6,
+      },
+      envelope: {
+        attack: 0.1,
+        decay: 0.4,
+        sustain: 0.3,
+        release: 0.7,
+      },
+    });
+
+    const s2 = new Tone.PolySynth(Tone.Synth).toDestination();
+    s2.set({
+      oscillator: {
+        type: "triangle",
+        volume: -6,
+      },
+      envelope: {
+        attack: 0.1,
+        decay: 0.4,
+        sustain: 0.5,
+        release: 0.3,
+      },
+    });
+
+    const reverb = new Tone.Reverb({
+      decay: 10.0,
+      preDelay: 0.01,
+    }).toDestination();
+    s1.connect(reverb);
+    s2.connect(reverb);
+
+    setSineSynth(s1);
+    setTriangleSynth(s2);
+  }, []);
 
   const [noteLog, setNoteLog] = useState<NoteLogCollection>({ entries: [] });
 

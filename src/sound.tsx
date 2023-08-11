@@ -48,7 +48,11 @@ export const playNote = (
     notesWithOctave.push(note + randOctave);
   });
 
-  synth.triggerAttackRelease(notesWithOctave, "16n", now);
+  let delay = 0.0;
+  notesWithOctave.forEach((note) => {
+    synth.triggerAttackRelease(note, "16n", now + delay);
+    delay += 0.05;
+  });
 
   playedNotesCallback(notesWithOctave, eventName);
 };
