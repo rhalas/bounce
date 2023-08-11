@@ -124,8 +124,6 @@ export const Canvas = (canvasProps: CanvasProps) => {
       );
 
       setLastEvent(newEvent);
-    } else {
-      console.log("AAA");
     }
   }, [newEvent]);
 

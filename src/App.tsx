@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Canvas } from "./canvas";
 import { NoteLog, NoteLogCollection } from "./noteLog";
 import styled from "styled-components";
@@ -13,26 +13,26 @@ function App() {
   sineSynth.set({
     oscillator: {
       type: "sine5",
-      volume: -5,
+      volume: -6,
     },
     envelope: {
       attack: 0.1,
-      decay: 0.3,
-      sustain: 0.5,
-      release: 0.5,
+      decay: 0.4,
+      sustain: 0.3,
+      release: 0.7,
     },
   });
 
-  const sawtoothSynth = new Tone.PolySynth(Tone.Synth).toDestination();
-  sawtoothSynth.set({
+  const triangleSynth = new Tone.PolySynth(Tone.Synth).toDestination();
+  triangleSynth.set({
     oscillator: {
-      type: "sawtooth",
-      volume: -5,
+      type: "triangle",
+      volume: -6,
     },
     envelope: {
-      attack: 0.2,
+      attack: 0.1,
       decay: 0.4,
-      sustain: 0.1,
+      sustain: 0.5,
       release: 0.3,
     },
   });
@@ -58,7 +58,7 @@ function App() {
         {initApp ? (
           <>
             <Canvas
-              synths={[sineSynth, sawtoothSynth]}
+              synths={[sineSynth, triangleSynth]}
               playedNotesCallback={playedNotesCallback}
             />
             <NoteLog noteLog={noteLog} />
