@@ -32,13 +32,13 @@ export const Canvas = (canvasProps: CanvasProps) => {
   }
 
   const labelToNote: labelToNoteType = {
-    floor: ["B", "D", "F"],
-    ceiling: ["B", "D", "F"],
-    leftWall: ["B", "D", "F"],
-    rightWall: ["B", "D", "F"],
-    ball: ["A", "B", "C"],
-    ball2: ["D", "E", "F"],
-    extraNote: ["A", "C", "E", "G"],
+    floor: ["A", "B", "C", "D", "E", "F", "G"],
+    ceiling: ["A", "B", "C"],
+    leftWall: ["D", "E", "F", "G"],
+    rightWall: ["A", "B", "C"],
+    ball: ["A", "B"],
+    ball2: ["F", "G"],
+    extraNote: ["C", "D", "E"],
   };
 
   const boxRef = useRef(null);
@@ -138,7 +138,6 @@ export const Canvas = (canvasProps: CanvasProps) => {
     },
     [setLastEvent, lastEvent]
   );
-
   useEffect(() => {
     if (initDone && !signalsDone) {
       Matter.Events.on(engineState, "collisionStart", (event) => {
