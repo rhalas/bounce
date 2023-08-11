@@ -1,6 +1,10 @@
 import * as Tone from "tone";
 
-export const scaleNotes = {
+interface scaleNotesTypes {
+  [key: string]: Array<string>;
+}
+
+export const scaleNotes: scaleNotesTypes = {
   C: ["C", "D", "E", "F", "G", "A", "B"],
   "C#": ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
   D: ["D", "E", "F#", "G", "A", "B", "C#"],
@@ -40,7 +44,7 @@ const sortByKey = (rootNote: string, notes: Array<string>) => {
 
 export const playNote = (
   synth: any,
-  noteNames: Array<Array<string>>,
+  allNoteIndicies: Array<Array<number>>,
   playedNotesCallback: (noteNames: Array<string>, eventName: string) => void,
   eventName: string,
   activeKey: string
@@ -49,6 +53,17 @@ export const playNote = (
 
   let notes = new Array();
   let notesWithOctave = new Array();
+
+  const selectedScale = scaleNotes[activeKey];
+
+  const noteNames: Array<Array<string>> = [];
+  allNoteIndicies.forEach((noteIndicies) => {
+    let notes: Array<string> = [];
+    noteIndicies.forEach((noteIndex) => {
+      notes.push(selectedScale[noteIndex]);
+    });
+    noteNames.push(notes);
+  });
 
   noteNames.forEach((noteOptions: Array<string>) => {
     let filtered = noteOptions.filter((item) => !notes.includes(item[0]));

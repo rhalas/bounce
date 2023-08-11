@@ -22,7 +22,7 @@ const MainCanvas = styled.div`
 
 export const Canvas = (canvasProps: CanvasProps) => {
   interface labelToNoteType {
-    [key: string]: Array<string>;
+    [key: string]: Array<number>;
   }
 
   interface boundaryType {
@@ -33,13 +33,13 @@ export const Canvas = (canvasProps: CanvasProps) => {
   }
 
   const labelToNote: labelToNoteType = {
-    floor: ["A", "B", "C", "D", "E", "F", "G"],
-    ceiling: ["A", "B", "C"],
-    leftWall: ["D", "E", "F", "G"],
-    rightWall: ["A", "B", "C"],
-    ball: ["A", "B"],
-    ball2: ["F", "G"],
-    extraNote: ["C", "D", "E"],
+    floor: [0, 1, 2, 3, 4, 5, 6],
+    ceiling: [0, 1, 2],
+    leftWall: [3, 4, 5, 6],
+    rightWall: [0, 1, 2],
+    ball: [0, 1],
+    ball2: [5, 6],
+    extraNote: [2, 3, 4],
   };
 
   const boxRef = useRef(null);
