@@ -6,6 +6,7 @@ import styled from "styled-components";
 type CanvasProps = {
   synths: Array<any>;
   playedNotesCallback: (noteNames: Array<string>, eventName: string) => void;
+  activeKey: string;
 };
 
 type NoteEvent = {
@@ -120,7 +121,8 @@ export const Canvas = (canvasProps: CanvasProps) => {
           labelToNote["extraNote"],
         ],
         canvasProps.playedNotesCallback,
-        newEvent!.name
+        newEvent!.name,
+        canvasProps.activeKey
       );
 
       setLastEvent(newEvent);
@@ -138,6 +140,7 @@ export const Canvas = (canvasProps: CanvasProps) => {
     },
     [setLastEvent, lastEvent]
   );
+
   useEffect(() => {
     if (initDone && !signalsDone) {
       Matter.Events.on(engineState, "collisionStart", (event) => {

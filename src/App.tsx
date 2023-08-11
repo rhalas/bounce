@@ -3,9 +3,29 @@ import { useState, useCallback, useEffect } from "react";
 import { Canvas } from "./canvas";
 import { NoteLog, NoteLogCollection } from "./noteLog";
 import styled from "styled-components";
+import { scaleNotes } from "./sound";
 
 const AppComponent = styled.div`
   display: flex;
+  flex-wrap: wrap;
+`;
+
+const SettingsRow = styled.div`
+  display: flex;
+  margin: auto;
+  margin-bottom: 20px;
+`;
+
+const BreakRow = styled.div`
+  flex-basis: 100%;
+  height: 0;
+`;
+
+const AppRow = styled.div`
+  display: flex;
+  margin: auto;
+  border-style: groove;
+  border-width: medium;
 `;
 
 function App() {
@@ -66,16 +86,40 @@ function App() {
     []
   );
 
+  const scaleOptions = Object.keys(scaleNotes);
+  const [activeKey, setActiveKey] = useState<string>("C");
+
+  const selectScaleOption = (scaleOption: string) => {
+    setActiveKey(scaleOption);
+  };
+
   return (
     <>
       <AppComponent>
         {initApp ? (
           <>
-            <Canvas
-              synths={[sineSynth, triangleSynth]}
-              playedNotesCallback={playedNotesCallback}
-            />
-            <NoteLog noteLog={noteLog} />
+            <SettingsRow>
+              {scaleOptions.map((scaleOption) => {
+                return (
+                  <button
+                    onClick={() => {
+                      selectScaleOption(scaleOption);
+                    }}
+                  >
+                    {scaleOption}
+                  </button>
+                );
+              })}
+            </SettingsRow>
+            <BreakRow />
+            <AppRow>
+              <Canvas
+                synths={[sineSynth, triangleSynth]}
+                playedNotesCallback={playedNotesCallback}
+                activeKey={activeKey}
+              />
+              <NoteLog noteLog={noteLog} />
+            </AppRow>
           </>
         ) : (
           <button onClick={() => setInitApp(true)}> Click to start </button>

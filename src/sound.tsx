@@ -1,5 +1,20 @@
 import * as Tone from "tone";
 
+export const scaleNotes = {
+  C: ["C", "D", "E", "F", "G", "A", "B"],
+  "C#": ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
+  D: ["D", "E", "F#", "G", "A", "B", "C#"],
+  "D#": ["Eb", "F", "G", "Ab", "Bb", "C", "D"],
+  E: ["E", "F#", "G#", "A", "B", "C#", "D#"],
+  F: ["F", "G", "A", "Bb", "C", "D", "E"],
+  "F#": ["F#", "G#", "A#", "B", "C#", "D#", "F"],
+  G: ["G", "A", "B", "C", "D", "E", "F#"],
+  "G#": ["Ab", "Bb", "C", "Db", "Eb", "F", "G"],
+  A: ["A", "B", "C#", "D", "E", "F#", "G#"],
+  "A#": ["Bb", "C", "D", "Eb", "F", "G", "A"],
+  B: ["B", "C#", "D#", "E", "F#", "G#", "A#"],
+};
+
 const sortByKey = (rootNote: string, notes: Array<string>) => {
   let sortedNotes = notes.sort();
   let sortedByKeyNotes = sortedNotes;
@@ -27,7 +42,8 @@ export const playNote = (
   synth: any,
   noteNames: Array<Array<string>>,
   playedNotesCallback: (noteNames: Array<string>, eventName: string) => void,
-  eventName: string
+  eventName: string,
+  activeKey: string
 ) => {
   const now = Tone.now();
 
@@ -41,7 +57,7 @@ export const playNote = (
     notes.push(noteName);
   });
 
-  const sortedByKeyNotes = sortByKey("C", notes);
+  const sortedByKeyNotes = sortByKey(activeKey, notes);
 
   sortedByKeyNotes.forEach((note: string) => {
     const randOctave = Math.floor(Math.random() * 3 + 2);
